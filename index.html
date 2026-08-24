@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ Xemick – Retro House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #FF6B00;
+    --orange-dark: #CC4400;
+    --orange-dim: rgba(255,107,0,0.15);
+    --black: #0d0d0d;
+    --near-black: #141414;
+    --gray-dark: #222222;
+    --gray-mid: #444444;
+    --gray-light: #888888;
+    --gray-pale: #bbbbbb;
+    --white: #ffffff;
+    --font-display: 'Black Han Sans', sans-serif;
+    --font-condensed: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,13,13,0.95);
+    border-bottom: 2px solid var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--orange); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 32px;
+  }
+  nav ul a {
+    font-family: var(--font-condensed);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray-pale);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--orange); }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 20px 60px;
+    background: var(--black);
+  }
+
+  /* Vinyl background graphic */
+  .hero-vinyl {
+    position: absolute;
+    right: -120px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 620px;
+    height: 620px;
+    opacity: 0.07;
+    animation: spin 30s linear infinite;
+  }
+  @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero-vinyl { animation: none; } }
+
+  /* Stripe accent top */
+  .hero-stripe {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--orange);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 7px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 14vw, 148px);
+    line-height: 0.9;
+    color: var(--white);
+    letter-spacing: -2px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-name .dj {
+    display: block;
+    color: var(--orange);
+    font-size: clamp(36px, 6vw, 64px);
+    letter-spacing: 10px;
+    font-family: var(--font-condensed);
+    font-weight: 900;
+    margin-bottom: -8px;
+  }
+
+  .hero-tagline {
+    margin-top: 28px;
+    font-family: var(--font-condensed);
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--gray-light);
+    text-transform: uppercase;
+  }
+  .hero-tagline span { color: var(--gray-pale); }
+
+  /* Waveform decoration */
+  .waveform {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-top: 48px;
+  }
+  .waveform-bar {
+    width: 5px;
+    background: var(--orange);
+    border-radius: 2px;
+    animation: wave 1.2s ease-in-out infinite alternate;
+  }
+  .waveform-bar:nth-child(even) { background: var(--gray-mid); }
+  @keyframes wave { from { opacity: 0.4; } to { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .waveform-bar { animation: none; } }
+
+  .scroll-hint {
+    margin-top: 48px;
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gray-mid);
+    text-transform: uppercase;
+  }
+
+  /* ─── SECTIONS COMMON ─── */
+  section { padding: 96px 40px; }
+  .container { max-width: 1040px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 40px;
+  }
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--orange);
+    margin-bottom: 40px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--near-black); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .about-body {
+    font-size: 17px;
+    color: var(--gray-pale);
+    line-height: 1.75;
+  }
+  .about-body p + p { margin-top: 16px; }
+  .about-body strong { color: var(--white); font-weight: 500; }
+
+  /* Stats block */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--gray-mid);
+    border: 1px solid var(--gray-mid);
+  }
+  .stat {
+    background: var(--gray-dark);
+    padding: 28px 24px;
+    border-left: 3px solid var(--orange);
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 44px;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* Events tags */
+  .events-block { margin-top: 32px; }
+  .events-title {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--gray-mid);
+    color: var(--gray-pale);
+    background: transparent;
+    transition: border-color .2s, color .2s;
+  }
+  .tag:hover { border-color: var(--orange); color: var(--orange); }
+  .tag.highlight { border-color: var(--orange); color: var(--orange); }
+
+  /* ─── GENRES ─── */
+  #genres { background: var(--black); }
+
+  .genres-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--gray-dark);
+  }
+  .genre-card {
+    background: var(--near-black);
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: background .2s;
+  }
+  .genre-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s;
+  }
+  .genre-card:hover { background: #1c1c1c; }
+  .genre-card:hover::before { transform: scaleX(1); }
+
+  .genre-number {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--gray-mid);
+    margin-bottom: 12px;
+  }
+  .genre-name {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .genre-desc {
+    font-size: 14px;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  /* ─── GALLERY ─── */
+  #gallery { background: var(--near-black); }
+
+  .gallery-intro {
+    font-size: 16px;
+    color: var(--gray-light);
+    margin-bottom: 40px;
+    max-width: 560px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto auto;
+    gap: 3px;
+  }
+
+  .photo-slot {
+    position: relative;
+    overflow: hidden;
+    background: var(--gray-dark);
+    aspect-ratio: 1;
+    cursor: pointer;
+  }
+  .photo-slot:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+  .photo-slot:nth-child(6) { grid-column: span 2; }
+
+  .photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(30%) contrast(1.05);
+    transition: filter .3s, transform .4s;
+  }
+  .photo-slot:hover img {
+    filter: grayscale(0%) contrast(1.1);
+    transform: scale(1.04);
+  }
+
+  /* Placeholder for missing images */
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-mid);
+    color: var(--gray-mid);
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    gap: 8px;
+  }
+  .photo-placeholder svg { opacity: 0.4; }
+
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(255,107,0,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity .3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+  .photo-slot:hover .photo-overlay { opacity: 1; }
+  .photo-caption {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--black); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .contact-intro {
+    font-size: 17px;
+    color: var(--gray-pale);
+    line-height: 1.75;
+    margin-bottom: 32px;
+  }
+
+  .contact-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .contact-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    border-left: 3px solid var(--orange);
+    padding-left: 20px;
+  }
+  .contact-item-label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .contact-item-value {
+    font-size: 16px;
+    color: var(--gray-pale);
+  }
+  .contact-item-value a {
+    color: var(--gray-pale);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .contact-item-value a:hover { color: var(--orange); }
+
+  /* Contact form */
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-mid);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color .2s;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--orange); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--gray-dark); }
+
+  .btn-submit {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    font-family: var(--font-condensed);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: background .2s;
+    align-self: flex-start;
+    border-radius: 0;
+  }
+  .btn-submit:hover { background: var(--orange-dark); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--near-black);
+    border-top: 2px solid var(--orange);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--white);
+    letter-spacing: 2px;
+  }
+  .footer-logo span { color: var(--orange); }
+  .footer-copy {
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gray-mid);
+  }
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-social a {
+    font-family: var(--font-condensed);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-social a:hover { color: var(--orange); }
+
+  /* ─── VINYL SVG (hero) ─── */
+  .vinyl-svg circle { }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 860px) {
+    nav { padding: 0 20px; }
+    nav ul { gap: 16px; }
+    section { padding: 64px 20px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .genres-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .photo-slot:nth-child(1) { grid-column: span 2; }
+    .photo-slot:nth-child(6) { grid-column: span 1; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 560px) {
+    nav ul { display: none; }
+    .genres-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .photo-slot:nth-child(1) { grid-column: span 2; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo"><span>DJ</span> XEMICK</a>
+  <ul>
+    <li><a href="#about">Over</a></li>
+    <li><a href="#genres">Genres</a></li>
+    <li><a href="#gallery">Foto's</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-stripe"></div>
+
+  <!-- Spinning vinyl background -->
+  <svg class="hero-vinyl" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="250" cy="250" r="245" fill="#fff"/>
+    <circle cx="250" cy="250" r="230" fill="none" stroke="#aaa" stroke-width="2"/>
+    <circle cx="250" cy="250" r="210" fill="none" stroke="#aaa" stroke-width="1.5"/>
+    <circle cx="250" cy="250" r="190" fill="none" stroke="#aaa" stroke-width="2"/>
+    <circle cx="250" cy="250" r="170" fill="none" stroke="#aaa" stroke-width="1.5"/>
+    <circle cx="250" cy="250" r="150" fill="none" stroke="#aaa" stroke-width="2"/>
+    <circle cx="250" cy="250" r="130" fill="none" stroke="#aaa" stroke-width="1.5"/>
+    <circle cx="250" cy="250" r="110" fill="none" stroke="#aaa" stroke-width="2"/>
+    <circle cx="250" cy="250" r="90" fill="none" stroke="#aaa" stroke-width="1.5"/>
+    <circle cx="250" cy="250" r="70" fill="#FF6B00"/>
+    <circle cx="250" cy="250" r="18" fill="#fff"/>
+    <circle cx="250" cy="250" r="8" fill="#aaa"/>
+  </svg>
+
+  <div class="hero-eyebrow">Retro House · Est. 1992</div>
+  <h1 class="hero-name">
+    <span class="dj">DJ</span>
+    XEMICK
+  </h1>
+  <p class="hero-tagline">
+    <span>House · Techno · Progressive · Club · Ambiance</span>
+  </p>
+
+  <div class="waveform" aria-hidden="true">
+    <div class="waveform-bar" style="height:18px;animation-delay:.0s"></div>
+    <div class="waveform-bar" style="height:32px;animation-delay:.1s"></div>
+    <div class="waveform-bar" style="height:24px;animation-delay:.2s"></div>
+    <div class="waveform-bar" style="height:42px;animation-delay:.05s"></div>
+    <div class="waveform-bar" style="height:28px;animation-delay:.15s"></div>
+    <div class="waveform-bar" style="height:16px;animation-delay:.25s"></div>
+    <div class="waveform-bar" style="height:36px;animation-delay:.08s"></div>
+    <div class="waveform-bar" style="height:22px;animation-delay:.18s"></div>
+    <div class="waveform-bar" style="height:44px;animation-delay:.03s"></div>
+    <div class="waveform-bar" style="height:20px;animation-delay:.13s"></div>
+    <div class="waveform-bar" style="height:30px;animation-delay:.22s"></div>
+    <div class="waveform-bar" style="height:14px;animation-delay:.07s"></div>
+  </div>
+
+  <div class="scroll-hint">↓ Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">Over DJ Xemick</div>
+    <h2 class="section-title">Meer dan 30 jaar<br>op het podium</h2>
+    <div class="about-grid">
+      <div>
+        <div class="divider"></div>
+        <div class="about-body">
+          <p>DJ Xemick is een van de meest ervaren house-DJ's in het circuit. Actief since het begin van de jaren 90, toen house muziek België en Nederland stormenderhand veroverde. Van de eerste underground parties tot de grootste podia van het land — Xemick was er bij.</p>
+          <p>Met een diepe passie voor het genre en een scherp gevoel voor sfeer weet hij altijd de juiste plaat op het juiste moment te draaien. Zijn sets zijn een mix van authentieke 90s classics, progressive grooves en stomende techno — aangedreven door <strong>meer dan 5500 vinylplaten</strong>.</p>
+          <p>Van intieme club nights tot massale outdoor events: Xemick past zijn sound aan het publiek aan, maar behoudt altijd zijn eigen identiteit.</p>
+        </div>
+        <div class="events-block">
+          <div class="events-title">Opgetreden op</div>
+          <div class="tags">
+            <span class="tag highlight">Planet of House</span>
+            <span class="tag highlight">Redbeats</span>
+            <span class="tag highlight">Dreamzone</span>
+            <span class="tag">Club Sets</span>
+            <span class="tag">Private Events</span>
+            <span class="tag">Outdoor Festivals</span>
+            <span class="tag">Cub Sessions</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-number">+5500</div>
+            <div class="stat-label">Vinylplaten</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">Jaar actief</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">90s</div>
+            <div class="stat-label">Begin carrière</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Live vinyl</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GENRES -->
+<section id="genres">
+  <div class="container">
+    <div class="section-label">Specialiteiten</div>
+    <h2 class="section-title">Sound & Stijl</h2>
+    <div class="genres-grid">
+      <div class="genre-card">
+        <div class="genre-number">01</div>
+        <div class="genre-name">House</div>
+        <p class="genre-desc">De roots. Chicago deep house, soulful grooves en die onmiskenbare 909 kick. Het begin van alles.</p>
+      </div>
+      <div class="genre-card">
+        <div class="genre-number">02</div>
+        <div class="genre-name">Retro House</div>
+        <p class="genre-desc">Classics uit de gouden periode '90–'98. Tijdloze tracks die een zaal altijd doen ontploffen.</p>
+      </div>
+      <div class="genre-card">
+        <div class="genre-number">03</div>
+        <div class="genre-name">Club</div>
+        <p class="genre-desc">Energieke club tracks met stevige basslines. Gebouwd voor grote zalen en volle dansloers.</p>
+      </div>
+      <div class="genre-card">
+        <div class="genre-number">04</div>
+        <div class="genre-name">Techno</div>
+        <p class="genre-desc">Duister, repetitief en hypnotisch. Van melodieuze techno tot de rauwste warehouse sound.</p>
+      </div>
+      <div class="genre-card">
+        <div class="genre-number">05</div>
+        <div class="genre-name">Progressive</div>
+        <p class="genre-desc">Lange buildups, atmosferische synths en een flow die een publiek urenlang meesleept.</p>
+      </div>
+      <div class="genre-card">
+        <div class="genre-number">06</div>
+        <div class="genre-name">Ambiance</div>
+        <p class="genre-desc">Voor de openingsset, de chill-out room of het podium dat vraagt om diepte en gevoel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Foto's</div>
+    <h2 class="section-title">In actie</h2>
+    <p class="gallery-intro">Live registraties van optreden op grote events en club nights. Vervang de placeholders met je eigen foto's door <code>src="foto1.jpg"</code> in te vullen.</p>
+    <div class="gallery-grid">
+
+      <!-- Foto 1 – groot (2×2) -->
+      <div class="photo-slot">
+        <!-- Vervang onderstaande placeholder door: <img src="foto1.jpg" alt="DJ Xemick live"> -->
+        <div class="photo-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/></svg>
+          Foto 1
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Planet of House</span></div>
+      </div>
+
+      <!-- Foto 2 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 2
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Redbeats</span></div>
+      </div>
+
+      <!-- Foto 3 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 3
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Dreamzone</span></div>
+      </div>
+
+      <!-- Foto 4 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 4
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Vinyl collectie</span></div>
+      </div>
+
+      <!-- Foto 5 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 5
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Club set</span></div>
+      </div>
+
+      <!-- Foto 6 – breed -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 6
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Outdoor festival</span></div>
+      </div>
+
+      <!-- Foto 7 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 7
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Behind the decks</span></div>
+      </div>
+
+      <!-- Foto 8 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 8
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Cub sessions</span></div>
+      </div>
+
+      <!-- Foto 9 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 9
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">Night set</span></div>
+      </div>
+
+      <!-- Foto 10 -->
+      <div class="photo-slot">
+        <div class="photo-placeholder">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Foto 10
+        </div>
+        <div class="photo-overlay"><span class="photo-caption">De platentas</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Boekingen &amp; Contact</div>
+    <h2 class="section-title">Zet Xemick<br>op jouw podium</h2>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-intro">Voor boekingen, samenwerkingen of vragen over beschikbaarheid — neem contact op. DJ Xemick is beschikbaar voor club nights, festivals, private events en open air podia.</p>
+        <div class="contact-detail">
+          <div class="contact-item">
+            <div>
+              <div class="contact-item-label">E-mail</div>
+              <div class="contact-item-value"><a href="mailto:info@djxemick.be">info@djxemick.be</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div>
+              <div class="contact-item-label">Telefoon</div>
+              <div class="contact-item-value"><a href="tel:+32400000000">+32 400 00 00 00</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div>
+              <div class="contact-item-label">Regio</div>
+              <div class="contact-item-value">België &amp; Nederland</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div>
+              <div class="contact-item-label">Social</div>
+              <div class="contact-item-value">
+                <a href="#">Facebook</a> &nbsp;·&nbsp;
+                <a href="#">Instagram</a> &nbsp;·&nbsp;
+                <a href="#">Mixcloud</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Naam</label>
+            <input type="text" id="name" placeholder="Jouw naam" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="jouw@mail.be" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type">Type evenement</label>
+          <select id="type">
+            <option value="">Selecteer type...</option>
+            <option>Club night</option>
+            <option>Festival / Outdoor</option>
+            <option>Private event</option>
+            <option>Open air podium</option>
+            <option>Andere</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="date">Datum</label>
+          <input type="date" id="date">
+        </div>
+        <div class="form-group">
+          <label for="message">Bericht</label>
+          <textarea id="message" placeholder="Vertel iets over je event, locatie, publiek en verwacht tijdslot..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Stuur boeking</button>
+        <div id="form-msg" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;color:#FF6B00;margin-top:8px;display:none;">
+          Bericht verzonden — we nemen snel contact op.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>DJ</span> XEMICK</div>
+  <div class="footer-copy">© 2024 DJ Xemick · Retro House Est. 1992</div>
+  <div class="footer-social">
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">Mixcloud</a>
+  </div>
+</footer>
+
+<script>
+  function handleSubmit(e) {
+    e.preventDefault();
+    var msg = document.getElementById('form-msg');
+    msg.style.display = 'block';
+    e.target.reset();
+    setTimeout(function(){ msg.style.display = 'none'; }, 5000);
+  }
+
+  // Smooth active nav highlight on scroll
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY + 100;
+    sections.forEach(function(sec) {
+      if (scrollY >= sec.offsetTop && scrollY < sec.offsetTop + sec.offsetHeight) {
+        navLinks.forEach(function(a) {
+          a.style.color = a.getAttribute('href') === '#' + sec.id ? '#FF6B00' : '';
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
