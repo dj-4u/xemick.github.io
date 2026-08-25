@@ -869,20 +869,25 @@
         </div>
       </div>
 
-      <form class="contact-form" onsubmit="handleSubmit(event)">
+      <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleSubmit(event)">
+        <input type="hidden" name="access_key" value="2b077990-2a7a-4ac4-a244-73662c31b527">
+        <input type="hidden" name="subject" value="Nieuwe boeking via xemick.be">
+        <input type="hidden" name="from_name" value="DJ Xemick Website">
+        <input type="checkbox" name="botcheck" style="display:none;">
+
         <div class="form-row">
           <div class="form-group">
             <label for="name">Naam</label>
-            <input type="text" id="name" placeholder="Jouw naam" required>
+            <input type="text" id="name" name="name" placeholder="Jouw naam" required>
           </div>
           <div class="form-group">
             <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="jouw@mail.be" required>
+            <input type="email" id="email" name="email" placeholder="jouw@mail.be" required>
           </div>
         </div>
         <div class="form-group">
           <label for="type">Type evenement</label>
-          <select id="type">
+          <select id="type" name="type_evenement">
             <option value="">Selecteer type...</option>
             <option>Club night</option>
             <option>Festival / Outdoor</option>
@@ -893,16 +898,14 @@
         </div>
         <div class="form-group">
           <label for="date">Datum</label>
-          <input type="date" id="date">
+          <input type="date" id="date" name="datum">
         </div>
         <div class="form-group">
           <label for="message">Bericht</label>
-          <textarea id="message" placeholder="Vertel iets over je event, locatie, publiek en verwacht tijdslot..."></textarea>
+          <textarea id="message" name="message" placeholder="Vertel iets over je event, locatie, publiek en verwacht tijdslot..."></textarea>
         </div>
         <button type="submit" class="btn-submit">Stuur boeking</button>
-        <div id="form-msg" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;color:#FF6B00;margin-top:8px;display:none;">
-          Bericht verzonden — we nemen snel contact op.
-        </div>
+        <div id="form-msg" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:2px;margin-top:8px;display:none;"></div>
       </form>
     </div>
   </div>
@@ -920,12 +923,39 @@
 </footer>
 
 <script>
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    var form = e.target;
+    var btn = form.querySelector('.btn-submit');
     var msg = document.getElementById('form-msg');
+
+    btn.disabled = true;
+    btn.textContent = 'Verzenden…';
+
+    try {
+      var response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(form)
+      });
+      var data = await response.json();
+
+      if (data.success) {
+        msg.style.color = '#FF6B00';
+        msg.textContent = 'Bericht verzonden — we nemen snel contact op.';
+        form.reset();
+      } else {
+        msg.style.color = '#ff4444';
+        msg.textContent = 'Er ging iets mis. Probeer opnieuw of mail rechtstreeks.';
+      }
+    } catch (err) {
+      msg.style.color = '#ff4444';
+      msg.textContent = 'Verbindingsfout. Controleer je internet en probeer opnieuw.';
+    }
+
     msg.style.display = 'block';
-    e.target.reset();
-    setTimeout(function(){ msg.style.display = 'none'; }, 5000);
+    btn.disabled = false;
+    btn.textContent = 'Stuur boeking';
+    setTimeout(function(){ msg.style.display = 'none'; }, 6000);
   }
 
   // Smooth active nav highlight on scroll
